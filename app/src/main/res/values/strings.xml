@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">kassssprzak</string>
+
+    <string name="lewo">Lewo</string>
+    <string name="prawo">Prawo</string>
+    <string name="info">Wciśnij ekran, żeby zacząć</string>
+</resources>
