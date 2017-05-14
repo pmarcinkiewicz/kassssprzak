@@ -259,7 +259,7 @@ public class SilnikRenderujacy extends View {
 
             if (jestOwocek) {
                 paint.setColor(owoc.color);
-                canvas.drawCircle(owoc.x, owoc.y, mPredkosc / 3, paint);
+                canvas.drawCircle(owoc.x, owoc.y, mPredkosc / 2, paint);
 //                canvas.drawRect(owoc.x - mPredkosc / 2, owoc.y - mPredkosc / 2,
 //                        owoc.x + mPredkosc / 2, owoc.y + mPredkosc / 2, paint);
             }
