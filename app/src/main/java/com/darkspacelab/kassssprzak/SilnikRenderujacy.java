@@ -16,9 +16,12 @@ import java.util.Random;
  */
 
 public class SilnikRenderujacy extends View {
+
     public SilnikRenderujacy(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
+    public boolean nieWWezu;
 
     public int losujKolor()
     {
@@ -76,9 +79,11 @@ public class SilnikRenderujacy extends View {
 
         if(strona) {
             x -= mPredkosc * generuj.nextInt(w/2 / mPredkosc);
+            x += mPredkosc;
         }
         else {
             x += mPredkosc * generuj.nextInt(w/2 / mPredkosc);
+            x -= mPredkosc;
         }
         return x;
     }
@@ -92,11 +97,13 @@ public class SilnikRenderujacy extends View {
         strona = generuj.nextBoolean();
 
         if(strona) {
-           y -= mPredkosc * generuj.nextInt(h/2 / mPredkosc);
+           y -= mPredkosc * generuj.nextInt(h/2 / mPredkosc) + mPredkosc;
+            y += mPredkosc;
 
         }
         else {
-            y += mPredkosc * generuj.nextInt(h/2 / mPredkosc);
+            y += mPredkosc * generuj.nextInt(h/2 / mPredkosc) - mPredkosc;
+            y -= mPredkosc;
         }
         return y;
     }
@@ -134,8 +141,8 @@ public class SilnikRenderujacy extends View {
         mSegmenty.add(new Segment(w / 2, h / 2,losujKolor()));
         mKierunek = Kierunki.GORA;
         mPrzegrana = false;
+        jestOwocek = false;
         invalidate();
-
     }
 
     boolean mPrzegrana = false;
@@ -192,6 +199,17 @@ public class SilnikRenderujacy extends View {
                 mSegmenty.add(poprzedni);
                 owoc = new Owocek(losujX(),losujY(),losujKolor());
             }
+
+            do {
+                nieWWezu = true;
+                for (Segment sgmnt : mSegmenty) {
+                    if (owoc.x == sgmnt.x && owoc.y == sgmnt.y) {
+                        owoc = new Owocek(losujX(),losujY(),losujKolor());
+                        nieWWezu = false;
+                    }
+                }
+            } while(!nieWWezu);
+
         }
 //        Segment seg = mSegmenty.get(0);
 //        if(owoc.x == seg.x && owoc.y == seg.y)
@@ -249,7 +267,7 @@ public class SilnikRenderujacy extends View {
         this.w = w;
         this.h = h;
         super.onSizeChanged(w, h, oldw, oldh);
-        mPredkosc = (w > h ? h : w) / 20;
+        mPredkosc = (w > h ? h : w) / 18;
         System.out.println("w: " + w + " h: " + h);
     }
     @Override
@@ -259,7 +277,7 @@ public class SilnikRenderujacy extends View {
 
             if (jestOwocek) {
                 paint.setColor(owoc.color);
-                canvas.drawCircle(owoc.x, owoc.y, mPredkosc / 2, paint);
+                canvas.drawCircle(owoc.x, owoc.y, mPredkosc / 3, paint);
 //                canvas.drawRect(owoc.x - mPredkosc / 2, owoc.y - mPredkosc / 2,
 //                        owoc.x + mPredkosc / 2, owoc.y + mPredkosc / 2, paint);
             }
@@ -269,7 +287,7 @@ public class SilnikRenderujacy extends View {
             for (Segment segment : mSegmenty) {
 
                 paint.setColor(segment.color);
-                canvas.drawCircle(segment.x, segment.y, mPredkosc / 2, paint);
+                canvas.drawCircle( segment.x, segment.y, mPredkosc / 2, paint);
             }
         }
     }

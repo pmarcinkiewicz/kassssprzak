@@ -21,7 +21,7 @@ public class GlownaActivity extends AppCompatActivity {
     private Button mPrawy;
     private TextView mInfo;
 
-    private int mSampleDurationTime = 500; // 1 sec
+    private int mSampleDurationTime = 100; //  ~10 fps
     private boolean continueToRun = true;
 
     Handler mHandler = new Handler();
